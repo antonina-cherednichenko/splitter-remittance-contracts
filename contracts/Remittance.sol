@@ -1,7 +1,8 @@
 pragma solidity ^0.4.11;
 
+import "./Stoppable.sol";
 
-contract Remittance {
+contract Remittance is Stoppable {
 
 	struct Funds {
 		address owner;
@@ -15,7 +16,10 @@ contract Remittance {
 	event Withdraw(address sender, uint blockNumber, uint deadline, uint amount);
 
 	function deposit(bytes32 finalHash, uint deadline) 
+	   public
 	   payable
+	   onlyOwner
+       onlyIfRunning
 	   returns(bool success)
 	{
 		require(msg.value > 0);
@@ -29,6 +33,8 @@ contract Remittance {
 	}
 
 	function withdraw(bytes32 hash1, bytes32 hash2) 
+	  public 
+	  onlyIfRunning
 	  returns (bool success)
 	{
 		bytes32 finalHash = keccak256(hash1, hash2);
@@ -47,8 +53,9 @@ contract Remittance {
 		msg.sender.transfer(amount);
 
 		Withdraw(msg.sender, block.number, funds.deadline, amount);
-
 		return true;
 	}
+
+	function () payable { assert(true); }
 
 }

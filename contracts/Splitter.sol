@@ -1,15 +1,21 @@
 pragma solidity ^0.4.11;
 
+import "./Stoppable.sol";
 
-contract Splitter {
+contract Splitter is Stoppable {
 
 	mapping(address => uint) public funds;
+
+	bool public running;
 
 	event SplitFunds(address sender, address recepient1, address recepient2, uint funds1, uint funds2);
 	event WithdrawFunds(address recepient, uint amount);
 	
 	function splitFunds(address recepient1, address recepient2) 
+	   public
 	   payable 
+	   onlyOwner
+	   onlyIfRunning
 	   returns (bool success)
 	{
 		require (msg.value > 0);
@@ -25,10 +31,11 @@ contract Splitter {
 		SplitFunds(msg.sender, recepient1, recepient2, funds1, funds2);
 
 		return true;
-
 	}
 
 	function withdrawFunds() 
+	   public
+	   onlyIfRunning
 	   returns (bool success)
 	{
 		require(funds[msg.sender] > 0);
@@ -39,5 +46,7 @@ contract Splitter {
         WithdrawFunds(msg.sender, amount);
 		return true;
 	}
+
+	function () payable { assert(true); }
 
 }
