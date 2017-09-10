@@ -22,6 +22,8 @@ contract Splitter {
 		funds[recepient1] += funds1;
 		funds[recepient2] += funds2;
 
+		SplitFunds(msg.sender, recepient1, recepient2, funds1, funds2);
+
 		return true;
 
 	}
@@ -30,19 +32,12 @@ contract Splitter {
 	   returns (bool success)
 	{
 		require(funds[msg.sender] > 0);
-
 		uint amount = funds[msg.sender];
 		funds[msg.sender] = 0;
 
-		if (!msg.sender.send(amount)) throw;
-
+		msg.sender.transfer(amount);
         WithdrawFunds(msg.sender, amount);
-
 		return true;
-
 	}
-
-
-
 
 }
