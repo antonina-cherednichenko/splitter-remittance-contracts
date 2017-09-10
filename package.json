@@ -1,0 +1,25 @@
+{
+  "name": "splitter-remittance",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antonina-cherednichenko/splitter-remittance-contracts.git"
+  },
+  "devDependencies": {
+    "bluebird": "^3.5.0"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antonina-cherednichenko/splitter-remittance-contracts/issues"
+  },
+  "homepage": "https://github.com/antonina-cherednichenko/splitter-remittance-contracts#readme"
+}
